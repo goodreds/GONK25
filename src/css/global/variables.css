@@ -12,5 +12,5 @@
    --radius-l: 2.5rem;
    --uppercase-kerning: 0.04ch;
    /* Define --indent-space so our calc() rules work for the inspo pattern */
-      --indent-size: var(--space-xs-l);
+   --indent-size: var(--space-xs-l);
 }

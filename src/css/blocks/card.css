@@ -7,7 +7,7 @@
    position: relative;
 }
 
-.card-heading {
+.card__heading {
    font-size: var(--size-step-00);
    text-transform: uppercase;
    letter-spacing: var(--uppercase-kerning);
@@ -22,9 +22,9 @@
    line-height: var(--leading-flat);
 }
 
-/* The card__content element needs space above it which is consistent with the card's padding, so we use --space-1 */
+/* The card__content element needs space above it which is consistent with the card's padding, so we use --space-l */
 .card__content {
-   margin-block-start: var(--space-1);
+   margin-block-start: var(--space-l);
 }
 
 .card__alert {
@@ -47,7 +47,7 @@
    /* A triangle (using the Clippy site (https://bennettfeely.com/clippy/), with a z-index: 1 so that it sits above everything in this current stacking context (https://web.dev/learn/css/z-index?continue=https%3A%2F%2Fweb.dev%2Flearn%2Fcss%23article-https%3A%2F%2Fweb.dev%2Flearn%2Fcss%2Fz-index) */
    clip-path: polygon(0 0, 100% 0, 100% 100%);
    z-index: 1;
-   /* To get a negative valeu for a variable, multiply it by -1. When looking for stroke-width, we're adding 1px as a fallback just in case. */
+   /* To get a negative value for a variable, multiply it by -1. When looking for stroke-width, we're adding 1px as a fallback just in case. */
    top: calc(var(--stroke-width, 1px) * -1);
    right: calc(var(--stroke-width, 1px) * -1);
 }
@@ -66,8 +66,8 @@
 }
 
 /* Add a touch more space to the button with a flow-space adjustment */
-.card button {
-   --flow-space: var(--space-1);
+.card .button {
+   --flow-space: var(--space-l);
 }
 
 /* If something has a href attribute that is overed in the card element */

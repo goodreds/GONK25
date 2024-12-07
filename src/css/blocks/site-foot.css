@@ -5,7 +5,9 @@
    padding-block: var(--space-m);
 }
 
-/* Removing margin from everything that's in the wrapper element. Although its only a couple of <p> elements now, this covers us if anything else finds itself in the footer in the future */
+/* Removing margin from everything that's in the wrapper element. Although its only a couple of <p> elements now, this covers us if anything else finds itself in the footer in the future
+   TODO:
+*/
 .site-foot .wrapper * {
    margin: 0;
 }

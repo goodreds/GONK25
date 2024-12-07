@@ -57,9 +57,13 @@
    .masthead__heading {
       grid-row: 2;
       grid-column: 2;
-      text-align: left;
-      margin-block-start: var(--space-s);
    }
+   .masthead__meta {
+    grid-row: 3;
+    grid-column: 2;
+    text-align: left;
+    margin-block-start: var(--space-s);
+  }
    .masthead__location {
       grid-row: 3;
       grid-column: 1;

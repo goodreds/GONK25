@@ -86,6 +86,7 @@
 */
 .inspo .wrapper {
    z-index: 1;
-   max-width: unset;
-   padding: 0;
+   /* TODO: Ask Andy about this - it makes the inspo pattern full-width but this isn't represented in the same way on https://bloom-barista.academy/ so for now it is commented out */
+   /* max-width: unset;
+   padding: 0; */
 }

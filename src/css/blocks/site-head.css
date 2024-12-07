@@ -32,8 +32,8 @@
    --hr-stroke: var(--stroke-width) solid var(--color-primary);
 }
 
-/* The container query that determines the brand element is at least 68vi (68% of the viewport) wide and less than 50rem wide. If it is true, we style the chile <a> element white. Remember we cannot apply styles to containers in a container query, so we have to target the <a> */
-@container site-head-brand (68vi <= width <= 50rem) {
+/* The container query that determines the brand element is at least 68vi (68% of the viewport) wide and less than 50rem wide. If it is true, we style the child <a> element white. Remember we cannot apply styles to containers in a container query, so we have to target the <a> */
+@container site-head-brand (68vi <=width <=50rem) {
    .site-head__brand a {
       color: var(--color-light);
    }

@@ -1,0 +1,24 @@
+/* We set the gap so that it is column-only. If it was changed to allow wrapping, there'd be a big old gap between the icon and text */
+.labelled-icon {
+   display: flex;
+   align-items: baseline;
+   line-height: var(--leading-fine);
+   gap: 0 var(--space-xs);
+}
+
+/* The icon is straightforward because it is the same size as text allowing us to use 1lh as the height and then put it down a smidge to sit nicely, visually, using an optical adjustment */
+.labelled-icon svg {
+   height: 1lh;
+   transform: translateY(
+      0.5ex
+   );
+}
+
+/* As I see it, this is a flexible component that should inherit colour - so we apply a utility class:
+
+<p class="labelled-icon text-light text-step-2">
+   ...
+</p>
+
+This is also detailed in the pattern library
+*/

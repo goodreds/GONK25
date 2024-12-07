@@ -1,0 +1,19 @@
+.closer {
+   background: var(--color-primary);
+   color: var(--color-dark);
+   /* The clamp() function is trying to generate a top padding size that is:
+      - At least 10rem (approx 150px based on type scale)
+      - Ideally 50vb (50% of the height of the viewport)
+      - At most, 20rem (roughly 360px based on our type scale)
+   */
+   padding-block: clamp(10rem, 50vb, 20rem) var(--gutter);
+   font-weight: var(--font-bold);
+}
+
+/* For the <svg>, we unset background and padding to override the global CSS */
+.closer svg[role='img'][width][height] {
+   width: 100%;
+   height: auto;
+   background: unset;
+   padding: unset;
+}

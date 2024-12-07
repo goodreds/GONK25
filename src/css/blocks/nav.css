@@ -1,0 +1,14 @@
+/* Layouts that are completely controlled by the layout compositions, flow and cluster. All we do in this component is configure their spacing and the visual appearance of links. */
+
+/* We set flow-space to a medium value on the space scale and then given --gutter two values - medium for row space and large for coulmn space */
+.nav {
+   --flow-space: var(--space-m);
+   --gutter: var(--space-m) var(--space-1);
+
+   line-height: var(--leading-flat);
+}
+
+/* The default behaviour for links is to have an underline. We remove that only if the item isn't being hovered or is the current active page. aria-current='page' is the attribute which communicates the current page to assistive technology. It’s a useful hook to visually communicate that with a persistent underline. */
+.nav a:not(:hover):not([aria-current='page']) {
+   text-decoration: none;
+}

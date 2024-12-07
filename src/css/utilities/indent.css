@@ -1,0 +1,6 @@
+/* We're looking for an --indent-size variable which falls back to a custom spacing pair, starting off as the extra small size and growing to the large size and the viewport increase in size - so there's a thin indent on smaller viewports and a chunky one on large viewports.
+   For the colour, we're looking for an --indent-color variable which falls back to currentColor. It means that wherever we use it, we will probably need to set a colour.
+*/
+.indent {
+   border-inline-start: var(--indent-size, var(--space-xs-l)) solid var(--indent-color, currentColor);
+}

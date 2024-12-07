@@ -1,0 +1,42 @@
+.prose {
+   --flow-space: var(--space-1);
+}
+
+/* This prevents large text from blowing out and blowing up the design on large headings on small screens, by allowing hyphens to do the heavy lifting but where a long word might be used, it falls back to overflow-wrap: anywhere will allow the text to wrap */
+.prose :is(h1,h2,h3) {
+   overflow-wrap: anywhere;
+   hyphens: auto;
+}
+/* Set up quite a short length on paragraphs, lists, figcaptions and blockquotes, while also encouraging the browser to wrap the text nicely */
+.prose :is(p, li, dl, figcaption, blockquote) {
+   max-width: 60ch;
+   text-wrap: pretty;
+}
+
+/* Handy block - reduces the space of anything that follows a heading, so that the content looks like part of a section. This works by first looking for headings one through four, then targeting any direct sibling (+ * combinators) that don't have a class (:not([class]), then when selected, we reduce the space by stepping down the scale. */
+/* Using a combinator (+ *) to add space before and after figures and tables, then for headings wit no class (:not([class])), we're upping the scale to again make headings feel like sections of content */
+.prose :is(h1,h2,h3,h4) + *:not([class]) {
+   --flow-space: var(--space-m)
+}
+/* For lists and sub-lists (li > is(ol, ul)), we're driving down the --flow-space to make them a bit higher. */
+ .prose :is(ul ,ol):not([class]) li + li,
+ .prose :is(ul, ol):not([class]) li >  :is(ol, ul) {
+   --flow-space: var(--space-xs);
+ }
+/* Adding more space around the <hr> element (remember its margin-block value is looking for --flow-space) */
+ .prose hr {
+   --flow-space: var(--space-2xl);
+ }
+
+ /* Adding a little border that creates a little frame to ensure that the image background does not blend in with the background colour - we did the same with SVGs. We don't do this globally though, as then we'd need to remove the border in other CSS blocks, which is an unnecessary faff. */
+ .prose :is(img, picture, video) {
+   border: var(--stroke-solid);
+ }
+
+ /* Adding as media query for medium veiwports (as defined in src/design-tokens/viewports.json). Tailwind steps in here with its screen() function, which loads our design token for the viewport. This is in keeping with using media queries for small adjustments, and here we're undoing the text wrapping stuff from above, with unset */
+@media screen(md) {
+   .prose :is(h1,h2,h3) {
+      overflow-wrap: unset;
+      hyphens: unset;
+   }
+}

@@ -1,0 +1,11 @@
+.site-foot {
+   background: var(--color-dark-glare);
+   color: var(--color-light);
+   line-height: var(--leading-flat);
+   padding-block: var(--space-m);
+}
+
+/* Removing margin from everything that's in the wrapper element. Although its only a couple of <p> elements now, this covers us if anything else finds itself in the footer in the future */
+.site-foot .wrapper * {
+   margin: 0;
+}

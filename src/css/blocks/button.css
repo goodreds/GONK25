@@ -1,0 +1,66 @@
+.button {
+   --button-bg: var(--color-primary);
+   --button-text: var(--color-dark);
+   --button-x-padding: 2em;
+   --button-y-padding: 1.1em;
+   --button-gutter: 0.5ch;
+   /* When a user focuses a button, they get a nice outline in a colour that matches the rest of the design by using a global colour */
+   --focus-color: var(--color-primary);
+
+   /* Inline-flex makes positioning the icon and the text easier */
+   display: inline-flex;
+   gap: var(--button-gutter);
+   align-items: center;
+   line-height: var(--leading-flat);
+   /* Relative positioning for the parent because we'll use absolute positioning in the corner */
+   position: relative;
+   border: none;
+   /* Use of pointer for cursor explained here: https://piccalil.li/blog/how-i-build-a-button-component/ */
+   cursor: pointer;
+   background: var(--button-bg);
+   color: var(--button-text);
+   padding: var(--button-x-padding) var(--button-y-padding);
+   /* When using the uppercase text transform, we also need to use the uppercase-kerning var to add a bit of room between letters */
+   text-transform: uppercase;
+   letter-spacing: var(--uppercase-kerning);
+   text-decoration: none;
+   font-size: var(--size-step-00);
+   font-weight: var(--font-bold);
+}
+
+/* The corner is also absolutely positioned, so it’s been pulled out of the button’s flow, which means we need to add more space to account for it. Doubling the --button-x-padding works nicely for that. */
+.button:has(.corner) {
+   padding-inline-end: calc(var(--button-x-padding) * 2);
+}
+
+/* For sizing the corner, we define a --corner-size and make it absolutely positioned. We could use the data-corner-docked exception, but I prefer in this case, to be more explicit. It’s likely that when a developer comes to work on this, they won’t go and look at the corner component, so with that presumption in mind, it makes sense for them to see the absolute positioning rule. */
+.button .corner {
+   --corner-size: 100%;
+
+   position: absolute;
+   right: 0;
+   top: 0;
+}
+
+/* Slightly brighten the button on hover */
+.button:hover {
+   filter: brightness(105%);
+}
+
+/* Animate the state change slightly */
+.button:hover .corner {
+   --corner-offset: 60%;
+}
+
+/* This makes the button feel 'squishy' when the user clicks */
+.button:active {
+   transform: scale(99%);
+}
+
+/* Secondary variant exceptions */
+.button[data-button-variant='secondary'] {
+   --button-bg: var(--color-dark-glare);
+   --button-text: var(--color-primary);
+   --focus-color: var(--color-dark);
+   --corner-secondary-color: var(--color-primary);
+}

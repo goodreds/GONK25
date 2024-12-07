@@ -1,0 +1,91 @@
+/*
+   Setting --indent-color to var(--color-dark) isn’t a mistake. Let me explain:
+
+   Because the yellow indent only covers half of the screen, we’re going to make inspo__stripe indent an absolutely positioned element. We also need the content to be indented with an invisible indent, so we’ve applied our utility to the base inspo element.
+*/
+.inspo {
+   --region-space: var(--space-2xl-4xl) 0;
+   --indent-color: var(--color-dark);
+}
+
+/*
+   We’re not declaring a font size because our container fill text is in place already. That wil handle the sizing for us. The reason we add z-index: 1 is because the text lines come before the image in the markup, so we can’t lean into natural z-index or the text will end up behind the image.
+*/
+.inspo__heading {
+   font-weight: var(--font-black);
+   line-height: var(--leading-micro);
+   text-wrap: balance;
+   z-index: 1;
+}
+
+/*
+   A 3 row and 2 column grid. The reason it is two columns is because we want that bit of space on the right for the image.
+
+   In terms of the rows, we’re doing a little magic trick - by setting the font-size on the grid. We can now use relative units to roughly size the rows based on the largest value in our type scale, using cap units. It also means that if the container fill text were to fail, the headings will inherit step 12 on the typography scale. We want the text to bleed into the image, so we can be a bit loosey-goosey here.
+*/
+.inspo__grid {
+   display: grid;
+   font-size: var(--size-step-12);
+   /* The minmax(1cap, auto) sizing for the text rows allow the text to wrap on smaller viewports without messing up the inspo and as well as whatever follows it in a page flow. */
+   grid-template-rows: minmax(1cap, auto) max-content minmax(1cap, auto);
+   grid-template-columns: 1fr;
+}
+
+/*
+   Using the same trick as before, we’re using the Figma asset size as our aspect ratio. It’s important to remind you that this is a <div> element that contains an <img>. We’ve got that setup because if the grid row was an <img>, the aspect-ratio would be ignored and the <img>, stretched.
+*/
+.inspo__img {
+   aspect-ratio: 1240/620;
+   grid-row: 2;
+   grid-column: 1;
+   border-radius: var(--radius-m);
+   overflow: hidden;
+}
+
+.inspo__img img {
+   width: 100%;
+   height: 100%;
+   object-fit: cover;
+}
+
+/*
+   A little cap adjustment has been added to set our type nicely over the image in each case
+*/
+.inspo__heading:first-of-type {
+   grid-row: 1;
+   transform: translateY(0.3cap);
+}
+
+.inspo__heading:last-of-type {
+   grid-row: 3;
+   transform: translateY(-0.5cap);
+}
+
+/*
+   The little stripe now. The first thing we do is set the --indent-color to be our primary, yellow colour. Then, it’s a case of making it a 40% height block with the lighter dark background and positioning it at the bottom.
+
+   We use calc() on the width and left values. For the width, we add --indent-size to 100% and for the left, we create a negative --indent-size to pull the stripe flush with the side. We need to do this because our base inspo also has an indent.
+
+   Lastly, we set z-index: 0 because we want the stripe to sit behind everything. Let’s make sure the content sits above with the next bit of CSS. */
+.inspo__stripe {
+   --indent-color: var(--color-primary);
+
+   background: var(--color-dark-glare);
+   width: calc(100% + var(--indent-size));
+   height: 40%;
+   position: absolute;
+   bottom: 0;
+   left: calc(var(--indent-size) * -1);
+   z-index: 0;
+}
+
+/*
+   The first part sits our content on top of the stripe. All of the content is in the .wrapper which is also a relative parent. This is the thing with z-index: as long as you keep a track of where you are with it, you don’t need bonkers numbers!
+
+   We are undoing the max-width and padding of the wrapper and that’s us, nearly done.
+*/
+.inspo .wrapper {
+   z-index: 1;
+   max-width: unset;
+   padding: 0;
+}

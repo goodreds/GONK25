@@ -1,0 +1,77 @@
+.card {
+   --focus-color: var(--color-primary);
+
+   border: var(--stroke);
+   border-radius: var(--radius-l);
+   padding: var(--space-l);
+   position: relative;
+}
+
+.card-heading {
+   font-size: var(--size-step-00);
+   text-transform: uppercase;
+   letter-spacing: var(--uppercase-kerning);
+   color: var(--color-light);
+}
+
+/* This is the yellow date text and we're adding a bit more space above it */
+.card__meta {
+   --flow-space: var(--space-s);
+
+   font-size: var(--size-step-2);
+   line-height: var(--leading-flat);
+}
+
+/* The card__content element needs space above it which is consistent with the card's padding, so we use --space-1 */
+.card__content {
+   margin-block-start: var(--space-1);
+}
+
+.card__alert {
+   /* This element is in a flow context so we need to remove the inherited margin */
+   --flow-space: 0;
+
+   /* display: grid and place-items:center combo will place the content right in the center. display:block and align-content: center is another way of doing the same thing (although this latter option is Chromium only at this point (1/12/24) */
+   display: grid;
+   place-items: center;
+   /* We’ve got a set width and height for the alert. Tread really carefully when applying set width and height values in CSS though. We’re almost always going to have the text, “Last few spots” in our alert element, but even with that knowledge, this feels slightly risky. I guess the message is only use this sort of element with fixed dimension if you know you have absolute control, long term. */
+   width: 10em;
+   height: 10em;
+   background: var(--color-light);
+   color: var(--color-dark);
+   text-transform: uppercase;
+   letter-spacing: var(--uppercase-kerning);
+   font-size: var(--size-step-000);
+   font-weight: bold;
+   position: absolute;
+   /* A triangle (using the Clippy site (https://bennettfeely.com/clippy/), with a z-index: 1 so that it sits above everything in this current stacking context (https://web.dev/learn/css/z-index?continue=https%3A%2F%2Fweb.dev%2Flearn%2Fcss%23article-https%3A%2F%2Fweb.dev%2Flearn%2Fcss%2Fz-index) */
+   clip-path: polygon(0 0, 100% 0, 100% 100%);
+   z-index: 1;
+   /* To get a negative valeu for a variable, multiply it by -1. When looking for stroke-width, we're adding 1px as a fallback just in case. */
+   top: calc(var(--stroke-width, 1px) * -1);
+   right: calc(var(--stroke-width, 1px) * -1);
+}
+
+/* Rotating the text and also shifting it up by -1lh - this ensures the text is visible once the clip runs through the middle of the box */
+.card__alert > span {
+   transform: rotate(45deg) translateY(-1lh);
+   line-height: var(--leading-flat);
+}
+
+/* Make the image square with apsect ratio. object-fit:cover is used to ensure the image isn't squashed if it doesn't happen to be square at aource, then tidying it up with a bit of border-radius from our global variables */
+.card img {
+   aspect-ratio: 1/1;
+   object-fit: cover;
+   border-radius: var(--radius-m);
+}
+
+/* Add a touch more space to the button with a flow-space adjustment */
+.card button {
+   --flow-space: var(--space-1);
+}
+
+/* If something has a href attribute that is overed in the card element */
+.card:has([href]:hover) {
+   background: rgb(from var(--color-light) r g b / 5%);
+   transition: background var(--transition-fade);
+}

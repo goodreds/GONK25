@@ -1,0 +1,93 @@
+/* Getting the spacing right by increasing --guter and also, setting a whopping large --flow-space. There is no need to remove list styles or anything like that as the CSS reset we're using has already done it for us because we added role="list" to the rolodex__list item, which also has flow composition attached */
+.rolodex {
+   --flow-space: var(--space-3xl);
+   --gutter: var(--space-l);
+}
+
+/* There's at least 3 different colour themes with this pattern, so just like with buttons, we're making state changes configurable with custom properties. We've defined a text colour, a background colour and a clip colour */
+.rolodex__item {
+   --rolodex-text: var(--color-dark);
+   --rolodex-bg: var(--color-light);
+   --rolodex-clip: var(--rolodex-triangle-color, var(--color-dark));
+
+   padding: var(--space-l);
+   background: var(--rolodex-bg);
+   color: var(--rolodex-text);
+   text-decoration: none;
+   position: relative;
+}
+
+/* The little triangle clip is a pseudo element of the rolodex__item. We make it square with aspect-ratio and the width is clamp()-powered. The logic is:
+   1. Be at least 2rem
+   2. Try to make yourself 10vi (10% of viewport width)
+   3. At most, be 7.5rem
+
+   This allows the clip to scale much like the text and spacing.
+
+   For the clip-path, we're making a triangle like we did for the card pattern. This is also using the --rolodex-clip custom property for the background colour too.
+
+   Finally, we push it out to the right with absolute positioning and prevent it from getting in the way of taps and clicks with pointer-events: none;
+*/
+.rolodex__item::before {
+   content: '';
+   width: clamp(2rem, 10vi, 7.5rem);
+   aspect-ratio: 1/1;
+   position: absolute;
+   pointer-events: none;
+   clip-path: polygon(0 0, 100% 0, 100% 100%);
+   background: var(--rolodex-clip);
+   position: absolute;
+   top: 0;
+   right: 0;
+}
+
+/* We know the rolodex__item is an <a> element, so it's safe to attach a hover like we have here. */
+.rolodex__item:hover {
+   filter: brightness(105%);
+}
+
+/* Taking the values from the Figma and matching them to the pattern library documentation for fluid typography and space. The heading is the smaller text and the number is an absolute whopper of a number  */
+.rolodex__heading {
+   display: flex;
+   flex-direction: column;
+   justify-content: space-between;
+   gap: var(--space-l);
+   margin: 0;
+   font-weight: var(--font-black);
+   font-size: var(--size-step-4);
+}
+
+.rolodex__number {
+   font-size: var(--size-step-10);
+}
+
+/* Using an aspect ratio of the (rounded) pixel value of the image in the artwork will give us the correct aspect ratio for scaling responsively.
+
+Because we're forcing the aspect ratio, it's a good idea to apply object-fit: cover to avoid stretching. Then we also add border radius to finish.
+*/
+.rolodex img {
+   aspect-ratio: 787/524;
+   object-fit: cover;
+   border-radius: var(--radius-m);
+}
+
+/* Add a couple of theme exceptions */
+.rolodex__item[data-rolodex-theme='primary'] {
+   --rolodex-text: var(--color-dark);
+   --rolodex-bg: var(--color-primary);
+}
+
+.rolodex__item[data-rolodex-theme='dark'] {
+   --rolodex-text: var(--color-light);
+   --rolodex-bg: var(--color-dark-glare);
+}
+
+/* Add a sticky position treatment only for viewports that are large and up.
+   To get sticky to work, it is necessary to apply either a top or bottom for vertical scrolling and left or right for horizontal scrolling, lest the browser doesn't know where to 'stick' them
+*/
+@media screen(lg) {
+   .rolodex__list li {
+      position: sticky;
+      top: var(--gutter);
+   }
+}

@@ -1,0 +1,47 @@
+/* We make the corner element square with the aspect ratio, and importantly making the block a relative parent. We define a height as we're using aspect-ratio, and that height is configurable with --corner-size, which defaults to a sensible 100px. This means that any element that has a corner as a child element can control the size. If a user's browser doesn't support aspect-ratio, they won't see anything */
+.corner {
+   display: block;
+   position: relative;
+   aspect-ratio: 1/1;
+   height: var(--corner-size, 100px);
+}
+
+/* For the pseudo-elements (::before and ::after), we're specifying content so that they actually render and making them block elements as they are inline by default. We also make them absolutely positioned to fill the relative parent with inset. The transition is addeded in case a parent wants to animate them. */
+.corner::before, .corner::after {
+   content: '';
+   display: block;
+   position: absolute;
+   inset: 0;
+   transition: clip-path var(--transition-bounce);
+}
+
+/* For both pseudo elements we have made them configurable colour-wise. By default they're black and white. Then the clip path uses a bit of maths to work out the polygon value, whic can be created visually by using Clippy (https://bennettfeely.com/clippy/). */
+/* The large clip path */
+.corner::before {
+   background: var(--corner-primary-color, var(--color-light));
+   clip-path: polygon(100% 0, var(--corner-offset, 30%) 0, 100% 100%);
+}
+
+/* The small clip path */
+.corner::after {
+   background: var(--corner-secondary-color, var(--color-dark));
+   clip-path: polygon(var(--corner-offset, 30%) 0, 0 0, 100% 100%);
+}
+
+/* The corner component is already highly configurable, but it'll be useful to be able to change the state of it, rather than every context it appears in having to repeat itself */
+
+/* Docked state suitable for the top-right corner of its parent */
+.corner[data-corner-docked] {
+   position: absolute;
+   top: 0;
+   right: 0;
+}
+
+/* For the colour theme variant, it’s a case of changing --corner-secondary-color and job done. */
+.corner[data-corner-theme='primary'] {
+   --corner-secondary-color: var(--color-primary);
+}
+
+/* Just a quick note here too, notice how we’ve got a difference in how we’re presenting our exceptions? We have data-corner-docked and data-corner-theme='primary'. The first one is treated like a boolean (true/false), much like HTML attributes like checked and disabled. It can only ever be on or off. The second, could be many values over time, so it is a string.
+
+It can only ever be one value at a time — this is why I like exceptions over BEM modifiers. For example — by using a string, the data-corner-theme attribute has lots of long-term flexibility which isn’t needed for data-corner-docked. */

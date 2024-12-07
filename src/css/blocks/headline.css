@@ -1,0 +1,15 @@
+/* We're controlling repel by defining --gutter to be smaller and setting --repel-vertical-alignment on the baseline. With a little bit of bottom padding and border the core block is done */
+.headline {
+   --repel-vertical-alignment: baseline;
+   --gutter: var(--space-s);
+
+   padding-block-end: var(--space-2xl);
+   border-block-end: var(--stroke);
+}
+
+/* The font-size is bumped up to step-10 because in Figma it was 111.45. Because step-10 is large, we are using leading-flat (which brings the line-height down to 1). If the typeface has longer ascenders or descenders it may need to be bumped to a line height of 1.1 */
+.headline__heading {
+   font-size: var(--size-step-10);
+   line-height: var(--leading-flat);
+   font-weight: var(--font-black);
+}

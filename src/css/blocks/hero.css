@@ -1,0 +1,68 @@
+/* This creates a single column with a three row grid layout. It also places the skip link in the centre and allows our image to span the entire layout. Then we add a border-radius along with an overflow:hidden which will act as a mask for the image that spanes the entire hero element. */
+.hero {
+   display: grid;
+   grid-template-columns: 1fr;
+   grid-template-rows: 1fr minmax(0,auto) 1fr;
+   justify-items: center;
+   position: relative;
+   border-radius: var(--radius-m);
+   overflow: hidden;
+}
+
+/* Referencing grid lines rather than columns or rows - 3 row layout = 4 lines */
+.hero img {
+   grid-column: 1;
+   grid-row: 1/4;
+}
+
+/* Using a subtle linear gradient as an overlay to guarantee a certain level of contrast for our skip link. We use a ::before pseudo-element, absolutely position it in all the corners with inset, then create a 50% opacity black to transparent gradient. */
+.hero::before {
+   content: '';
+   display: block;
+   position: absolute;
+   inset: 0;
+   background: linear-gradient(180deg, rgb(0 0 0/ 0%) 0%, rgb(0 0 0 / 50%) 100%);
+}
+
+/* Shrink the flow space a touch. Define --skip-link-color because we need to colour our text , but also the icon's circle consistently. We position it on our hero grid so it's placed on grid-row: 2. We limit the width of it so that the text wraps nicely by applying max-width: 12ch, which keeps our icon container, contained. */
+.hero__skip-link {
+   --skip-link-color: var(--color-primary);
+   --flow-space: var(--space-xs);
+
+   grid-column: 1;
+   grid-row: 2;
+   z-index: 1;
+   font-weight: var(--font-medium);
+   font-size: var(--size-step-0);
+   text-align: center;
+   text-decoration: none;
+   line-height: var(--leading-fine);
+   color: var(--skip-link-color);
+   max-width: 12ch;
+}
+
+/* We use the same place-items: center grid trick to stick the icon in the middle of our square, which we create with an aspect-ratio: 1/1 and then turn it into a circle with border-radius: 50% */
+.hero__skip-link-icon {
+   display: grid;
+   place-items: center;
+   margin-inline: auto;
+   font-size: var(--size-step-2);
+   /* We use max to pick the largest value between 50px and step seven on our fluid type scale */
+   height: max(50px, var(--size-step-7));
+   aspect-ratio: 1/1;
+   background: var(--skip-link-color);
+   /* We can't use currentColor here as the icon would vanish as soon as we apply the color value, it would also become currentColor which would cause the icon to vanish */
+   color: var(--color-dark);
+   border-radius: 50%;
+}
+
+/* We make label a block element so that --flow-space takes effect. It was inline, being a <span>, so vertical margin would be ignored by the browser */
+.hero__skip-link-label {
+   display: block;
+}
+
+/* A small animation when the skip link is hovered. Adding a transition at the point of hover in this animation allows it to snap-back into place - a top tip for making UIs feel nice and snappy */
+.hero__skip-link:hover .hero__skip-link-icon {
+   transform: translateY(5%);
+   transition: transform var(--transition-bounce);
+}
